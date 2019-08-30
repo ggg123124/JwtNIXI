@@ -215,7 +215,7 @@ public class TokenUtil {
 		String signatrue = "";
 		String token = "";
 		jwtPayload.put("exp", format.format(new Date(time)));
-		
+		jwtPayload = checkPayload(jwtHeaderJson);
 		ciphertext = EncryptionAndDecryption.getBase64UrlCiphertext(jwtHeaderJson, jwtPayload);
 		try {
 			signatrue = EncryptionAndDecryption.getSignature(ciphertext, key);
