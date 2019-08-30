@@ -3,18 +3,15 @@ package com.nixi.jwt.token;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Base64;
-import java.util.Calendar;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
+
 
 
 
