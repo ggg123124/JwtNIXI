@@ -88,10 +88,10 @@ public class TokenUtil {
 	 * 
 	* @author NIXI
 	* @Title: tokenCheck
-	* @Description: 检查token是否合法和有效
+	* @Description: 检查token是否合法和有效,并返回数据
 	* @param token
 	* @param key
-	* @return
+	* @return 
 	* @throws InvalidKeyException    参数
 	* @return String    返回类型
 	 */
@@ -198,7 +198,7 @@ public class TokenUtil {
 	* @Description: 获取token
 	* @param payload 负载
 	* @param key 密钥
-	* @param validTime 有效时间
+	* @param validTime 有效时间,单位秒
 	* @return    参数
 	* @return String    返回类型
 	 */
@@ -210,7 +210,9 @@ public class TokenUtil {
 		//日期格式化
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		long time = new Date().getTime();
+		validTime *= 1000;
 		time += validTime;
+		
 		String ciphertext = "";
 		String signatrue = "";
 		String token = "";
