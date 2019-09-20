@@ -231,7 +231,46 @@ public class TokenUtil {
 		return token;
 	}
 	
-	
+	/**
+	 * 
+	* @author NIXI
+	* @Title: getToken
+	* @Description: 根据传入的头部以及负载信息获取token
+	* @param head
+	* @param payload
+	* @param key
+	* @param validTime
+	* @return    token字符串
+	* @return String    返回类型
+	 */
+	public static String getToken(Map<String, Object> head ,Map<String, Object> payload,String key,long validTime) {
+		JSONObject jwtHeaderJson = new JSONObject(head);
+		jwtHeaderJson.put("alg", "HS256");
+		jwtHeaderJson.put("typ", "JWT");
+		JSONObject jwtPayload = new JSONObject(payload);
+		//日期格式化
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		long time = new Date().getTime();
+		validTime *= 1000;
+		time += validTime;
+		
+		String ciphertext = "";
+		String signatrue = "";
+		String token = "";
+		jwtPayload.put("exp", format.format(new Date(time)));
+		jwtPayload = checkPayload(jwtPayload);
+		ciphertext = EncryptionAndDecryption.getBase64UrlCiphertext(jwtHeaderJson, jwtPayload);
+		try {
+			signatrue = EncryptionAndDecryption.getSignature(ciphertext, key);
+		} catch (InvalidKeyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		token = ciphertext+"."+signatrue;
+		
+		return token;
+	}
 	
 	
 }
