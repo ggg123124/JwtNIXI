@@ -87,6 +87,46 @@ public class TokenUtil {
 	/**
 	 * 
 	* @author NIXI
+	* @Title: readToken
+	* @Description: 读取token数据
+	* @param token
+	* @return    参数
+	* @return Map<String,Object>    返回类型
+	 */
+	public static Map<String, Object> readToken(String token){
+		String ciphertext =  "";
+		String[] headerAndPayload = {};
+		Map<String, Object> map = new HashMap<String, Object>();
+		//日期格式化
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+		headerAndPayload = token.split("\\.");
+		//被base64url加密的头部信息
+		String jwtHeaderBase64UrlStr = headerAndPayload[0];
+		//被base64url加密的负载信息
+		String jwtPayloadBase64UrlStr = headerAndPayload[1];
+		ciphertext = jwtHeaderBase64UrlStr+"."+jwtPayloadBase64UrlStr;
+		
+		
+		//取出头部以及负载并将其转为json格式
+		String jwtHeaderStr = EncryptionAndDecryption.getBase64UrlPlaintext(jwtHeaderBase64UrlStr);
+		String jwtPayloadStr = EncryptionAndDecryption.getBase64UrlPlaintext(jwtPayloadBase64UrlStr);
+		JSONObject jwtHeaderJson = JSONObject.parseObject(jwtHeaderStr);
+		JSONObject jwtPayloadJson = JSONObject.parseObject(jwtPayloadStr);
+		Date expirationTime = null;
+		
+		
+		
+		map.put("jwtHeader", jwtHeaderJson);
+		map.put("jwtPayload", jwtPayloadJson);
+		
+		return map;
+	}
+	
+	
+	/**
+	 * 
+	* @author NIXI
 	* @Title: tokenCheck
 	* @Description: 检查token是否合法和有效,并返回数据
 	* @param token
