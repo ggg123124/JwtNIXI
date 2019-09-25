@@ -60,7 +60,7 @@ public class TokenUtil {
 		token = ciphertext+"."+signature;
 		return token;
 	}
-	
+	//test
 	/**
 	 * 
 	* @author NIXI
